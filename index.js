@@ -1,3 +1,3 @@
-var rcswitch = require('./build/Release/rcswitch.node');
+var rcswitch = require('bindings')('rcswitch');
 
 module.exports = new rcswitch.RCSwitch();

@@ -5,7 +5,7 @@ node-rcswitch
 
 Node bindings for the [rcswitch RaspberryPi port](https://github.com/r10r/rcswitch-pi).
 
-Successfully tested on Raspbian Wheezy up-to-date as of 2015-02-28.
+It should be compatible with Node 0.8, 0.10 and 0.12 (tested only on 0.10 and 0.12). Successfully tested on Raspbian Wheezy up-to-date as of 2015-02-28.
 
 ## Requirements
 
@@ -43,7 +43,7 @@ Return true.
 
 ### Type A
 
-![Type A](http://gladysproject.com/img/IMG_0628_2.jpg)
+![Type A switch](https://raw.github.com/marvinroger/node-rcswitch/master/img/type_a.jpg "Type A switch")
 
 #### rcswitch.switchOn(`group`, `switch`)
 
@@ -65,9 +65,7 @@ Return true.
 
 ### Type B
 
-![Type B](http://i9.instantgallery.de/s/su/sui/b0d5c19446819.png)
-
-(don't care about the mySwitch, here only for reference)
+![Type B switch](https://raw.github.com/marvinroger/node-rcswitch/master/img/type_b.jpg "Type B switch")
 
 #### rcswitch.switchOn(`group`, `switch`)
 
