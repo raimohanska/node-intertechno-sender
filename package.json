@@ -1,6 +1,6 @@
 {
   "name": "rcswitch",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Control your wireless power outlet sockets with RCSwitch for the Raspberry Pi",
   "main": "index.js",
   "scripts": {
@@ -24,6 +24,7 @@
     "node" : ">=0.8"
   },
   "author": "Marvin Roger <bonjourmarvin@marvinroger.fr> (http://www.marvinroger.fr/)",
+  "license": "GPL-2.0",
   "gypfile": true,
   "bugs": {
     "url": "https://github.com/marvinroger/node-rcswitch/issues"
