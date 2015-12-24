@@ -1,13 +1,17 @@
 #include "RCSwitchNode.h"
+#include <sched.h>
 
 Nan::Persistent<v8::Function> RCSwitchNode::constructor;
 
 void RCSwitchNode::Init(v8::Local<v8::Object> exports) {
   Nan::HandleScope scope;
 
-  if( wiringPiSetup() == -1 ) {
-    Nan::ThrowTypeError("rcswitch: GPIO initialization failed");
-    return;
+  setenv("WIRINGPI_GPIOMEM", "1", 0);
+  if ((strcmp(getenv("WIRINGPI_GPIOMEM"), "0") == 0) || (wiringPiSetupGpio() == -1)){
+      if (wiringPiSetupSys() == -1) {
+          Nan::ThrowTypeError("rcswitch: GPIO initialization failed");
+          return;
+      }
   }
 
   // Prepare constructor template
@@ -22,6 +26,7 @@ void RCSwitchNode::Init(v8::Local<v8::Object> exports) {
   Nan::SetPrototypeMethod(tpl, "send", Send);
   Nan::SetPrototypeMethod(tpl, "enableTransmit", EnableTransmit);
   Nan::SetPrototypeMethod(tpl, "disableTransmit", DisableTransmit);
+  Nan::SetPrototypeMethod(tpl, "setPulseLength", SetPulseLength);
   Nan::SetPrototypeMethod(tpl, "switchOn", SwitchOn);
   Nan::SetPrototypeMethod(tpl, "switchOff", SwitchOff);
 
@@ -88,10 +93,40 @@ void RCSwitchNode::Send(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 
   RCSwitchNode* obj = ObjectWrap::Unwrap<RCSwitchNode>(info.Holder());
 
-  Nan::Utf8String v8str(info[0]);
-  obj->rcswitch.send(*v8str);
+  // Save the original scheduling policy so we can restore it after
+  struct sched_param orig_sched;
+  int orig_policy = sched_getscheduler(0);
+  std::memset(&orig_sched, 0, sizeof(orig_sched));
+  sched_getparam(0, &orig_sched);
+  // printf("DEBUG: sched_policy pre setting: %i\n", sched_getscheduler(0));
+  // printf("DEBUG: sched_priority pre setting: %i\n", orig_sched.sched_priority);
 
-  info.GetReturnValue().Set(true);
+  struct sched_param sched;
+  std::memset (&sched, 0, sizeof(sched));
+  sched.sched_priority = sched_get_priority_max (SCHED_RR);
+  sched_setscheduler (0, SCHED_RR, &sched);
+  // sched_getparam(0, &sched);
+  // printf("DEBUG: sched_policy post setting: %i\n", sched_getscheduler(0));
+  // printf("DEBUG: sched_priority post setting: %i\n", sched.sched_priority);
+
+  if(info.Length() == 1) {
+    Nan::Utf8String v8str(info[0]);
+    obj->rcswitch.send(*v8str);
+    info.GetReturnValue().Set(true);
+  } else {
+    v8::Local<v8::Value> code = info[0];
+    v8::Local<v8::Value> bLength = info[1];
+    if((code->IsUint32()) && (bLength->IsUint32()))  {
+      obj->rcswitch.send(code->Uint32Value(), bLength->Uint32Value());
+      info.GetReturnValue().Set(true);
+    } else {
+      info.GetReturnValue().Set(false);
+    }
+  }
+  sched_setscheduler (0, orig_policy, &orig_sched);
+  // sched_getparam(0, &sched);
+  // printf("DEBUG: sched_policy post returning: %i\n", sched_getscheduler(0));
+  // printf("DEBUG: sched_priority post returning: %i\n", sched.sched_priority);
 }
 
 // notification.enableTransmit();
@@ -115,6 +150,20 @@ void RCSwitchNode::DisableTransmit(const Nan::FunctionCallbackInfo<v8::Value>& i
   RCSwitchNode* obj = ObjectWrap::Unwrap<RCSwitchNode>(info.Holder());
   obj->rcswitch.disableTransmit();
   info.GetReturnValue().Set(true);
+}
+
+// notification.setPulseLength();
+void RCSwitchNode::SetPulseLength(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+  Nan::HandleScope scope;
+  RCSwitchNode* obj = ObjectWrap::Unwrap<RCSwitchNode>(info.Holder());
+
+  v8::Local<v8::Value> pLength = info[0];
+  if(pLength->IsInt32()) {
+    obj->rcswitch.setPulseLength(pLength->Int32Value());
+    info.GetReturnValue().Set(true);
+  } else {
+    info.GetReturnValue().Set(false);
+  }
 }
 
 void RCSwitchNode::SwitchOn(const Nan::FunctionCallbackInfo<v8::Value>& info) {
