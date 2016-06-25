@@ -1,6 +1,6 @@
 {
   "name": "rcswitch-gpiomem",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Rootless control of your wireless power outlet sockets with RCSwitch for the Raspberry Pi. Fork of https://github.com/marvinroger/node-rcswitch.",
   "main": "index.js",
   "scripts": {

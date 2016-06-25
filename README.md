@@ -54,16 +54,27 @@ Personally, I have only tested on node v4.2.3. Per original author:
 ## Usage
 
 ```javascript
-var rcswitch = require('rcswitch-gpiomem'); // May throw an error if /dev/gpiomem is
-not accessible
+var rcswitch = require('rcswitch-gpiomem'); // May throw an error if /dev/gpiomem is not accessible
 rcswitch.enableTransmit(17); // Use **BCM** pin 17
-rcswitch.setPulseLength(190); // Set pulse length (see
-https://github.com/n8henrie/rf_pi)
+rcswitch.setPulseLength(190); // Set pulse length (see https://github.com/n8henrie/rf_pi)
+rcswitch.setRepeatTransmit(15); // Set number of repeat transmissions
 rcswitch.send(12345, 24) // send(code, bitlength)
 
 // Alternative
 rcswitch.switchOn("10110", 1); // Switch on the first unit of 10110 (code 1x23x) group
 rcswitch.switchOff("11000", 2); // Switch off the second unit of 11000 (code 12xxx) group
+```
+
+Note: If testing / experimenting from a local copy of the repo, you need to
+require the base directory of the repo:
+
+```bash
+git clone https://github.com/n8henrie/node-rcswitch-gpiomem.git
+cd node-rcswitch-gpiomem
+npm install .
+node
+> var rcswitch = require('.')
+rcswitch.enableTransmit(17);
 ```
 
 ## API
@@ -88,6 +99,10 @@ Return true.
 
 - `pLength` - RF pulse length, defaults to 190.
 - See: <http://n8henrie.com/2015/12/rf_pi>
+
+#### `rcswitch.setRepeatTransmit(int nRepeat)`
+
+- `nRepeat` - Number of repeat transmissions (default 10)
 
 #### `rcswitch.send(int code, int bLength)`
 
