@@ -189,3 +189,7 @@ Switch a remote switch off (Type C Intertechno).
 * `switch` - (Number) switch (can be 1, 2, 3, 4)
 
 Return true.
+
+## FAQ / Troubleshooting
+
+It seems that the `gpiomem` system I use and the SysFS method of interacting with the GPIO are not compatible for reasons [explained in this issue](https://github.com/n8henrie/homebridge-rcswitch-gpiomem/issues/11). Make sure that you aren't also using programs that access the GPIO by way of SysFS or this library may not work.
