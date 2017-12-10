@@ -1,4 +1,4 @@
-# node-rcswitch-gpiomem
+# node-intertechno-sender
 
 Controls my Intertechno outlets on Raspberry Pi / Node.js. 
 
