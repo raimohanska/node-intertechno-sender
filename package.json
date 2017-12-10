@@ -1,6 +1,6 @@
 {
   "name": "node-intertechno-sender",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Rootless control of my Intertechno switches. Fork of https://github.com/n8henrie/node-rcswitch-gpiomem.",
   "main": "index.js",
   "scripts": {
