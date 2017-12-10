@@ -28,7 +28,7 @@
 
 RCSwitch::RCSwitch() {
   this->nTransmitterPin = -1;
-  this->setRepeatTransmit(10);
+  this->setRepeatTransmit(5);
 }
 
 /**
