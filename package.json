@@ -1,7 +1,7 @@
 {
-  "name": "rcswitch-gpiomem",
-  "version": "0.3.2",
-  "description": "Rootless control of your wireless power outlet sockets with RCSwitch for the Raspberry Pi. Fork of https://github.com/marvinroger/node-rcswitch.",
+  "name": "node-intertechno-sender",
+  "version": "0.0.1",
+  "description": "Rootless control of my Intertechno switches. Fork of https://github.com/n8henrie/node-rcswitch-gpiomem.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/n8henrie/node-rcswitch-gpiomem.git"
+    "url": "https://github.com/raimohanska/node-intertechno-sender.git"
   },
   "keywords": [
     "rpi",
@@ -18,18 +18,14 @@
     "433",
     "rf",
     "wireless",
-    "gpiomem"
+    "intertechno"
   ],
   "engines": {
     "node": ">=0.8"
   },
-  "author": "Nathan Henrie <http://n8henrie.com>",
+  "author": "Juha Paananen",
   "license": "GPL-2.0",
   "gypfile": true,
-  "bugs": {
-    "url": "https://github.com/n8henrie/node-rcswitch-gpiomem/issues"
-  },
-  "homepage": "http://n8henrie.com/2015/12/control-an-rf-outlet-with-siri-via-homebridge",
   "dependencies": {
     "bindings": "^1.2.1",
     "nan": "^2.0.8"
