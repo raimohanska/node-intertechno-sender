@@ -20,9 +20,9 @@ Shameless frankenteinized fork of <https://github.com/n8henrie/node-rcswitch-gpi
 
 ```javascript
 var sender = require('node-intertechno-sender'); // May throw an error if /dev/gpiomem is not accessible
-sender.enableTransmit(7); // Use **BCM** pin 17
+sender.enableTransmit(7); // Use **BCM** pin 7
 sender.setRepeatTransmit(15); // Set number of repeat transmissions
-sender.send('1001011001101001010101011010010101010101010101010110100101010101')
+sender.send(sender.switches[0].on)
 ```
 
 ## API
