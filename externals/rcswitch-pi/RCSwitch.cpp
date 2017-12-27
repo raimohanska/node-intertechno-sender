@@ -73,6 +73,7 @@ void RCSwitch::send(char* sCodeWord) {
       i++;
     }
   }
+  digitalWrite(this->nTransmitterPin, LOW);
 }
 
 void RCSwitch::transmit(int nHighPulses, int nLowPulses) {
