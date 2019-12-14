@@ -15,6 +15,7 @@ Shameless frankenteinized fork of <https://github.com/n8henrie/node-rcswitch-gpi
 - Both the data and the power Pins of the 315/433Mhz emitter must be connected
   to the RPi. Note the number of the ~~WiringPi data~~ BCM Pin. (see
   http://wiringpi.com/pins/)
+- Currently doesn't compile with Node.js version 10 and above.
 
 ## Usage
 
